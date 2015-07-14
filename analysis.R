@@ -148,7 +148,7 @@ ggplot(prejfullfac,aes(x=nkidsfac,y=fit,group=bulg01,color=bulg01)) +
   theme(legend.title=element_blank()) +
   scale_color_manual(values=c("#bbbbbb","#333333"))
 
-ggsave(file="figures/whobenefits_fullfac.png",width=8,height=4)
+ggsave(file="figures/whobenefits_fullfac.pdf",width=8,height=4)
 
 #predicted effects for interaction btw cues and prej
 prejintbulgeffs<-Effect(c("prej","bulg01"),m10,se=T,xlevels=list(prej=0:1,bulg01=0:1))$fit
@@ -292,7 +292,7 @@ ggplot(gd,aes(x=oppose,y=cutall)) +
   scale_x_continuous(breaks=c(0,.25,.5,.75,1),labels=c("0",".25",".5",".75","1")) +
   scale_y_continuous(breaks=c(0,.25,.5,.75,1),labels=c("0",".25",".5",".75","1"))
 
-ggsave(file="figures/cutscatter.png",width=10,height=4)
+ggsave(file="figures/cutscatter.pdf",width=10,height=4)
 ggsave(file="figures/cutscatter.png",width=8,height=4)
 ggsave(file="figures/cutscatter_small.png",width=140,height=80,units="mm")
 

@@ -1,0 +1,48 @@
+
+% Table created by stargazer v.5.1 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
+% Date and time: Tue, Jul 14, 2015 - 22:46:34
+% Requires LaTeX packages: dcolumn 
+\begin{table}[!htbp] \centering 
+  \caption{Models of welfare chauvinism} 
+  \label{regtab1} 
+\footnotesize 
+\begin{tabular}{@{\extracolsep{5pt}}lD{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3} } 
+\\[-1.8ex]\hline \\[-1.8ex] 
+\\[-1.8ex] & \multicolumn{4}{c}{Opposed to cross-border welfare rights} \\ 
+\\[-1.8ex] & \multicolumn{1}{c}{(1)} & \multicolumn{1}{c}{(2)} & \multicolumn{1}{c}{(3)} & \multicolumn{1}{c}{(4)}\\ 
+\hline \\[-1.8ex] 
+ Intercept & 0.216^{***} & 0.073^{*} & 0.132^{***} & 0.134^{***} \\ 
+  & (0.030) & (0.032) & (0.037) & (0.036) \\ 
+  Gender (f) & 0.064^{***} & 0.058^{***} & 0.057^{***} & 0.058^{***} \\ 
+  & (0.013) & (0.012) & (0.012) & (0.012) \\ 
+  Age & 0.002^{***} & 0.002^{***} & 0.002^{***} & 0.002^{***} \\ 
+  & (0.0004) & (0.0004) & (0.0004) & (0.0004) \\ 
+  Education (some uni.) & -0.017 & -0.024 & -0.024 & -0.025 \\ 
+  & (0.014) & (0.013) & (0.013) & (0.013) \\ 
+  Employed & 0.046^{***} & 0.045^{***} & 0.044^{***} & 0.044^{***} \\ 
+  & (0.013) & (0.012) & (0.012) & (0.012) \\ 
+  Ethnic prejudice (EP) & 0.641^{***} & 0.633^{***} & 0.468^{***} & 0.638^{***} \\ 
+  & (0.032) & (0.030) & (0.062) & (0.030) \\ 
+  Economic conservatism (EC) & 0.090^{**} & 0.090^{**} & 0.091^{***} & -0.087 \\ 
+  & (0.029) & (0.027) & (0.027) & (0.059) \\ 
+  Children stay &  & 0.193^{***} & 0.193^{***} & 0.194^{***} \\ 
+  &  & (0.011) & (0.011) & (0.011) \\ 
+  Nationality: Bulgarian &  & 0.056^{***} & 0.020 & -0.013 \\ 
+  &  & (0.011) & (0.019) & (0.019) \\ 
+  No. of children (NC) &  & 0.008^{*} & -0.005 & -0.001 \\ 
+  &  & (0.004) & (0.007) & (0.007) \\ 
+  EP$\times$Nationality: Bulgarian &  &  & 0.105^{*} &  \\ 
+  &  &  & (0.047) &  \\ 
+  EP$\times$NC &  &  & 0.038^{*} &  \\ 
+  &  &  & (0.017) &  \\ 
+  EC$\times$Nationality: Bulgarian &  &  &  & 0.193^{***} \\ 
+  &  &  &  & (0.043) \\ 
+  EC$\times$NC &  &  &  & 0.025 \\ 
+  &  &  &  & (0.015) \\ 
+ N & \multicolumn{1}{c}{2,370} & \multicolumn{1}{c}{2,370} & \multicolumn{1}{c}{2,370} & \multicolumn{1}{c}{2,370} \\ 
+R$^{2}$ & \multicolumn{1}{c}{0.258} & \multicolumn{1}{c}{0.353} & \multicolumn{1}{c}{0.355} & \multicolumn{1}{c}{0.359} \\ 
+Adjusted R$^{2}$ & \multicolumn{1}{c}{0.256} & \multicolumn{1}{c}{0.350} & \multicolumn{1}{c}{0.352} & \multicolumn{1}{c}{0.356} \\ 
+\hline \\[-1.8ex] 
+\multicolumn{5}{l}{$^{*}$p $<$ .05; $^{**}$p $<$ .01; $^{***}$p $<$ .001} \\ 
+\end{tabular} 
+\end{table} 

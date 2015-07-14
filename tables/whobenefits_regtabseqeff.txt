@@ -1,0 +1,50 @@
+
+% Table created by stargazer v.5.1 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
+% Date and time: Tue, Jul 14, 2015 - 22:46:34
+% Requires LaTeX packages: dcolumn 
+\begin{table}[!htbp] \centering 
+  \caption{Tests of sequence effects} 
+  \label{regtabseqeff} 
+\footnotesize 
+\begin{tabular}{@{\extracolsep{1pt}}lD{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3} } 
+\\[-1.8ex]\hline \\[-1.8ex] 
+\\[-1.8ex] & \multicolumn{5}{c}{Opposed to cross-border welfare rights} \\ 
+\\[-1.8ex] & \multicolumn{1}{c}{(1)} & \multicolumn{1}{c}{(2)} & \multicolumn{1}{c}{(3)} & \multicolumn{1}{c}{(4)} & \multicolumn{1}{c}{(5)}\\ 
+\hline \\[-1.8ex] 
+ Intercept & 0.079^{*} & 0.073^{*} & 0.088^{**} & 0.072^{*} & 0.086^{*} \\ 
+  & (0.032) & (0.033) & (0.032) & (0.032) & (0.034) \\ 
+  Gender (f) & 0.058^{***} & 0.058^{***} & 0.057^{***} & 0.058^{***} & 0.058^{***} \\ 
+  & (0.012) & (0.012) & (0.012) & (0.012) & (0.012) \\ 
+  Age & 0.002^{***} & 0.002^{***} & 0.002^{***} & 0.002^{***} & 0.002^{***} \\ 
+  & (0.0004) & (0.0004) & (0.0004) & (0.0004) & (0.0004) \\ 
+  Education (some uni.) & -0.023 & -0.024 & -0.023 & -0.023 & -0.024 \\ 
+  & (0.013) & (0.013) & (0.013) & (0.013) & (0.013) \\ 
+  Employed & 0.045^{***} & 0.044^{***} & 0.044^{***} & 0.044^{***} & 0.045^{***} \\ 
+  & (0.012) & (0.012) & (0.012) & (0.012) & (0.012) \\ 
+  Ethnic prejudice (EP) & 0.633^{***} & 0.650^{***} & 0.633^{***} & 0.635^{***} & 0.634^{***} \\ 
+  & (0.030) & (0.038) & (0.030) & (0.030) & (0.030) \\ 
+  Economic conservatism (EC) & 0.089^{**} & 0.090^{**} & 0.089^{**} & 0.089^{**} & 0.090^{**} \\ 
+  & (0.027) & (0.027) & (0.027) & (0.027) & (0.027) \\ 
+  EP scale before probe (Before) & -0.012 & -0.001 & -0.032^{*} & 0.002 & -0.026 \\ 
+  & (0.011) & (0.019) & (0.015) & (0.015) & (0.026) \\ 
+  Children stay home (SH) & 0.193^{***} & 0.193^{***} & 0.173^{***} & 0.193^{***} & 0.193^{***} \\ 
+  & (0.011) & (0.011) & (0.016) & (0.011) & (0.011) \\ 
+  Nationality: Bulgarian & 0.056^{***} & 0.056^{***} & 0.056^{***} & 0.071^{***} & 0.056^{***} \\ 
+  & (0.011) & (0.011) & (0.011) & (0.016) & (0.011) \\ 
+  No. of children (NC) & 0.008^{*} & 0.008^{*} & 0.008^{*} & 0.008^{*} & 0.006 \\ 
+  & (0.004) & (0.004) & (0.004) & (0.004) & (0.005) \\ 
+  Before$\times$EP &  & -0.033 &  &  &  \\ 
+  &  & (0.047) &  &  &  \\ 
+  Before$\times$SH &  &  & 0.039 &  &  \\ 
+  &  &  & (0.022) &  &  \\ 
+  Before$\times$Bulgarian &  &  &  & -0.028 &  \\ 
+  &  &  &  & (0.022) &  \\ 
+  Before$\times$NC &  &  &  &  & 0.004 \\ 
+  &  &  &  &  & (0.008) \\ 
+ N & \multicolumn{1}{c}{2,370} & \multicolumn{1}{c}{2,370} & \multicolumn{1}{c}{2,370} & \multicolumn{1}{c}{2,370} & \multicolumn{1}{c}{2,370} \\ 
+R$^{2}$ & \multicolumn{1}{c}{0.353} & \multicolumn{1}{c}{0.353} & \multicolumn{1}{c}{0.354} & \multicolumn{1}{c}{0.353} & \multicolumn{1}{c}{0.353} \\ 
+Adjusted R$^{2}$ & \multicolumn{1}{c}{0.350} & \multicolumn{1}{c}{0.350} & \multicolumn{1}{c}{0.351} & \multicolumn{1}{c}{0.350} & \multicolumn{1}{c}{0.350} \\ 
+\hline \\[-1.8ex] 
+\multicolumn{6}{l}{$^{*}$p $<$ .05; $^{**}$p $<$ .01; $^{***}$p $<$ .001} \\ 
+\end{tabular} 
+\end{table} 

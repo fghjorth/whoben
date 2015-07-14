@@ -1,0 +1,47 @@
+
+% Table created by stargazer v.5.1 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
+% Date and time: Tue, Jul 14, 2015 - 22:46:36
+% Requires LaTeX packages: dcolumn 
+\begin{table}[!htbp] \centering 
+  \caption{Models of welfare chauvinism, full factorial models} 
+  \label{regtabfullfac} 
+\footnotesize 
+\begin{tabular}{@{\extracolsep{5pt}}lD{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3} } 
+\\[-1.8ex]\hline \\[-1.8ex] 
+\\[-1.8ex] & \multicolumn{3}{c}{Opposed to cross-border welfare rights} \\ 
+ & \multicolumn{1}{c}{Children stay} & \multicolumn{1}{c}{Not mentioned} & \multicolumn{1}{c}{b} \\ 
+\\[-1.8ex] & \multicolumn{1}{c}{(1)} & \multicolumn{1}{c}{(2)} & \multicolumn{1}{c}{(3)}\\ 
+\hline \\[-1.8ex] 
+ Intercept & 0.067^{*} & 0.070^{*} & 0.081^{*} \\ 
+  & (0.034) & (0.032) & (0.034) \\ 
+  Gender (f) & 0.058^{***} & 0.058^{***} & 0.058^{***} \\ 
+  & (0.012) & (0.012) & (0.012) \\ 
+  Age & 0.002^{***} & 0.002^{***} & 0.002^{***} \\ 
+  & (0.0004) & (0.0004) & (0.0004) \\ 
+  Education (some uni.) & -0.024 & -0.024 & -0.024 \\ 
+  & (0.013) & (0.013) & (0.013) \\ 
+  Employed & 0.045^{***} & 0.045^{***} & 0.045^{***} \\ 
+  & (0.012) & (0.012) & (0.012) \\ 
+  Ethnic prejudice (EP) & 0.633^{***} & 0.633^{***} & 0.633^{***} \\ 
+  & (0.030) & (0.030) & (0.030) \\ 
+  Economic conservatism (EC) & 0.090^{**} & 0.089^{**} & 0.090^{**} \\ 
+  & (0.027) & (0.027) & (0.027) \\ 
+  Nationality: Bulgarian & 0.068^{**} & 0.063^{***} & 0.056^{***} \\ 
+  & (0.026) & (0.015) & (0.011) \\ 
+  No. of children (NC) & 0.010 & 0.008^{*} & 0.005 \\ 
+  & (0.005) & (0.004) & (0.006) \\ 
+  Children stay home (SH) & 0.193^{***} & 0.200^{***} & 0.178^{***} \\ 
+  & (0.011) & (0.015) & (0.026) \\ 
+  SH$\times$NC &  &  & 0.005 \\ 
+  &  &  & (0.008) \\ 
+  SH$\times$Bulgarian &  & -0.013 &  \\ 
+  &  & (0.022) &  \\ 
+  NC$\times$Bulgarian & -0.004 &  &  \\ 
+  & (0.008) &  &  \\ 
+ N & \multicolumn{1}{c}{2,370} & \multicolumn{1}{c}{2,370} & \multicolumn{1}{c}{2,370} \\ 
+R$^{2}$ & \multicolumn{1}{c}{0.353} & \multicolumn{1}{c}{0.353} & \multicolumn{1}{c}{0.353} \\ 
+Adjusted R$^{2}$ & \multicolumn{1}{c}{0.350} & \multicolumn{1}{c}{0.350} & \multicolumn{1}{c}{0.350} \\ 
+\hline \\[-1.8ex] 
+\multicolumn{4}{l}{$^{*}$p $<$ .05; $^{**}$p $<$ .01; $^{***}$p $<$ .001} \\ 
+\end{tabular} 
+\end{table} 

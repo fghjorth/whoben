@@ -1,0 +1,28 @@
+% latex table generated in R 3.2.0 by xtable 1.7-4 package
+% Tue Jul 14 22:46:36 2015
+\begin{table}[ht]
+\centering
+\begin{tabular}{lrrrrr}
+  \hline
+ & Df & Sum Sq & Mean Sq & F value & Pr($>$F) \\ 
+  \hline
+Gender (f) & 1 & 0.34 & 0.34 & 4.80 & 0.0285 \\ 
+  Age & 1 & 4.83 & 4.83 & 69.23 & 0.0000 \\ 
+  Education (some uni.) & 1 & 3.42 & 3.42 & 48.98 & 0.0000 \\ 
+  Employed & 1 & 1.19 & 1.19 & 17.09 & 0.0000 \\ 
+  Ethnic prejudice (EP) & 1 & 55.01 & 55.01 & 788.06 & 0.0000 \\ 
+  Economic conservatism (EC) & 1 & 0.75 & 0.75 & 10.72 & 0.0011 \\ 
+  Bulgarian & 1 & 1.90 & 1.90 & 27.17 & 0.0000 \\ 
+  No. of children (NC) & 1 & 0.19 & 0.19 & 2.72 & 0.0990 \\ 
+  Children stay (CS) & 1 & 21.97 & 21.97 & 314.76 & 0.0000 \\ 
+  Bulgarian*NC & 1 & 0.02 & 0.02 & 0.25 & 0.6153 \\ 
+  Bulgarian * CS & 1 & 0.03 & 0.03 & 0.40 & 0.5275 \\ 
+  NC * Children stay & 1 & 0.03 & 0.03 & 0.41 & 0.5231 \\ 
+  Bulgarian * NC * SC & 1 & 0.01 & 0.01 & 0.19 & 0.6632 \\ 
+  Residuals & 2356 & 164.45 & 0.07 &  &  \\ 
+   \hline
+\end{tabular}
+\caption{Full factorial ANOVA on all experimental conditions with covariates (number of children as interval scale)} 
+\label{fullfac}
+\end{table}
+

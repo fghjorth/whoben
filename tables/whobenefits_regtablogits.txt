@@ -1,0 +1,48 @@
+
+% Table created by stargazer v.5.1 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
+% Date and time: Tue, Jul 14, 2015 - 22:46:35
+% Requires LaTeX packages: dcolumn 
+\begin{table}[!htbp] \centering 
+  \caption{Models of welfare chauvinism, logistic regressions} 
+  \label{regtablogits} 
+\footnotesize 
+\begin{tabular}{@{\extracolsep{5pt}}lD{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3} } 
+\\[-1.8ex]\hline \\[-1.8ex] 
+\\[-1.8ex] & \multicolumn{4}{c}{Opposed to cross-border welfare rights} \\ 
+\\[-1.8ex] & \multicolumn{1}{c}{(1)} & \multicolumn{1}{c}{(2)} & \multicolumn{1}{c}{(3)} & \multicolumn{1}{c}{(4)}\\ 
+\hline \\[-1.8ex] 
+ Intercept & -2.181^{***} & -3.524^{***} & -2.858^{***} & -3.022^{***} \\ 
+  & (0.247) & (0.299) & (0.350) & (0.337) \\ 
+  Gender (f) & 0.374^{***} & 0.381^{***} & 0.382^{***} & 0.386^{***} \\ 
+  & (0.100) & (0.106) & (0.106) & (0.106) \\ 
+  Age & 0.008^{*} & 0.010^{**} & 0.009^{**} & 0.010^{**} \\ 
+  & (0.003) & (0.004) & (0.004) & (0.004) \\ 
+  Education (some uni.) & -0.152 & -0.227 & -0.228 & -0.226 \\ 
+  & (0.112) & (0.118) & (0.119) & (0.119) \\ 
+  Employed & 0.216^{*} & 0.228^{*} & 0.220^{*} & 0.214^{*} \\ 
+  & (0.102) & (0.107) & (0.108) & (0.108) \\ 
+  Ethnic prejudice (EP) & 4.034^{***} & 4.423^{***} & 2.502^{***} & 4.510^{***} \\ 
+  & (0.291) & (0.310) & (0.615) & (0.313) \\ 
+  Economic conservatism (EC) & 0.634^{**} & 0.684^{**} & 0.673^{**} & -0.848 \\ 
+  & (0.229) & (0.243) & (0.244) & (0.544) \\ 
+  Children stay &  & 1.346^{***} & 1.353^{***} & 1.368^{***} \\ 
+  &  & (0.100) & (0.100) & (0.100) \\ 
+  Nationality: Bulgarian &  & 0.479^{***} & 0.148 & -0.001 \\ 
+  &  & (0.097) & (0.188) & (0.171) \\ 
+  No. of children (NC) &  & 0.077^{*} & -0.088 & -0.014 \\ 
+  &  & (0.034) & (0.066) & (0.061) \\ 
+  EP$\times$Nationality: Bulgarian &  &  & 1.035^{*} &  \\ 
+  &  &  & (0.504) &  \\ 
+  EP$\times$NC &  &  & 0.511^{**} &  \\ 
+  &  &  & (0.177) &  \\ 
+  EC$\times$Bulgarian &  &  &  & 1.371^{***} \\ 
+  &  &  &  & (0.400) \\ 
+  EC$\times$NC &  &  &  & 0.269 \\ 
+  &  &  &  & (0.143) \\ 
+ N & \multicolumn{1}{c}{2,370} & \multicolumn{1}{c}{2,370} & \multicolumn{1}{c}{2,370} & \multicolumn{1}{c}{2,370} \\ 
+Log Likelihood & \multicolumn{1}{c}{-1,401.265} & \multicolumn{1}{c}{-1,288.852} & \multicolumn{1}{c}{-1,282.505} & \multicolumn{1}{c}{-1,281.372} \\ 
+AIC & \multicolumn{1}{c}{2,816.531} & \multicolumn{1}{c}{2,597.703} & \multicolumn{1}{c}{2,589.010} & \multicolumn{1}{c}{2,586.743} \\ 
+\hline \\[-1.8ex] 
+\multicolumn{5}{l}{$^{*}$p $<$ .05; $^{**}$p $<$ .01; $^{***}$p $<$ .001} \\ 
+\end{tabular} 
+\end{table} 
