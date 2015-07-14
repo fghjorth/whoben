@@ -1,4 +1,8 @@
-setwd("~/GitHub/thesis/")
+setwd("~/GitHub/whoben") #set working directory here
+
+#####################################
+# READ IN DATA
+#####################################
 
 require(foreign)
 #read in data
@@ -7,6 +11,10 @@ gdlabs<-read.spss("rawdata/prel_s2_hjorth_20140505.sav",use.value.labels=T,to.da
 
 #get var labels
 varnames<-as.data.frame(attr(read.spss("prel_s2_hjorth_20140505.sav", to.data.frame=FALSE, use.value.labels=FALSE), "variable.labels"))
+
+#####################################
+# RECODE VARIABLES
+#####################################
 
 #treatment variable
 table(gdlabs$s2gr1)
@@ -78,4 +86,8 @@ gd$onlabmkt<-ifelse(gd$lmsit==1,1,0)
 table(gdlabs$income_own_m)
 gd$income<-ifelse(gd$income_own_m<14,(gd$income_own_m-1)/12,NA)
 
-saveRDS(gd,"data/whobenefits_data.rds")
+#####################################
+# SAVE DATA
+#####################################
+
+saveRDS(gd,"whobenefits_data.rds")

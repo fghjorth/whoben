@@ -1,25 +1,22 @@
 setwd("~/GitHub/whoben") #set working directory here
+
+#####################################
+# READ IN SAVED DATA
+#####################################
+
 gd<-readRDS("whobenefits_data.rds")
 
 #####################################
 # REGS
 #####################################
 
-#regs
-summary(m06<-lm(oppose~female+age2013+someuni+onlabmkt,data=gd))
+# Table 4
 summary(m07<-lm(oppose~female+age2013+someuni+onlabmkt+prej+eid,data=gd))
-
-require(stargazer)
-
-#reg table 0
-regtab0<-stargazer(m06,m07,style="apsr",title="Models of welfare chauvinism",intercept.bottom=F,digits=3,dep.var.labels="Opposed to cross-border welfare rights",dep.var.labels.include=T,font.size="footnotesize",label="regtab0",column.sep.width="5pt",covariate.labels=c("Intercept","Gender (f)","Age","Education (some uni.)","Employed","Ethnic prejudice (EP)","Economic conservatism (EC)"),omit.stat=c("f"),star.cutoffs=c(.05,.01,.001),align=T,table.placement="h!")
-writeLines(regtab0,con="tables/whobenefits_regtab0.txt")
-
 summary(m09<-lm(oppose~female+age2013+someuni+onlabmkt+prej+eid+stayhome+bulg01+nkids,data=gd))
 summary(m10<-lm(oppose~female+age2013+someuni+onlabmkt+eid+stayhome+prej*bulg01+prej*nkids,data=gd))
 summary(m11<-lm(oppose~female+age2013+someuni+onlabmkt+prej+stayhome+eid*bulg01+eid*nkids,data=gd))
 
-#reg table 1
+require(stargazer)
 regtab1<-stargazer(m07,m09,m10,m11,style="apsr",title="Models of welfare chauvinism",intercept.bottom=F,digits=3,dep.var.labels="Opposed to cross-border welfare rights",dep.var.labels.include=T,font.size="footnotesize",label="regtab1",column.sep.width="5pt",covariate.labels=c("Intercept","Gender (f)","Age","Education (some uni.)","Employed","Ethnic prejudice (EP)","Economic conservatism (EC)","Children stay","Nationality: Bulgarian","No. of children (NC)","EP$\\times$Nationality: Bulgarian","EP$\\times$NC","EC$\\times$Nationality: Bulgarian","EC$\\times$NC"),omit.stat=c("f","ser"),star.cutoffs=c(.05,.01,.001),align=T)
 writeLines(regtab1,con="tables/whobenefits_regtab1.txt")     
 
