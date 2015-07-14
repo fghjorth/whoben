@@ -10,7 +10,7 @@ gd<-readRDS("whobenefits_data.rds")
 # REGS
 #####################################
 
-# Table 4
+# Main results: Table 4
 summary(m07<-lm(oppose~female+age2013+someuni+onlabmkt+prej+eid,data=gd))
 summary(m09<-lm(oppose~female+age2013+someuni+onlabmkt+prej+eid+stayhome+bulg01+nkids,data=gd))
 summary(m10<-lm(oppose~female+age2013+someuni+onlabmkt+eid+stayhome+prej*bulg01+prej*nkids,data=gd))
