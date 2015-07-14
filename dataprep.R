@@ -6,8 +6,8 @@ setwd("~/GitHub/whoben") #set working directory here
 
 require(foreign)
 #read in data
-gd<-read.spss("rawdata/prel_s2_hjorth_20140505.sav",use.value.labels=F,to.data.frame=T)
-gdlabs<-read.spss("rawdata/prel_s2_hjorth_20140505.sav",use.value.labels=T,to.data.frame=T)
+gd<-read.spss("prel_s2_hjorth_20140505.sav",use.value.labels=F,to.data.frame=T)
+gdlabs<-read.spss("prel_s2_hjorth_20140505.sav",use.value.labels=T,to.data.frame=T)
 
 #get var labels
 varnames<-as.data.frame(attr(read.spss("prel_s2_hjorth_20140505.sav", to.data.frame=FALSE, use.value.labels=FALSE), "variable.labels"))
