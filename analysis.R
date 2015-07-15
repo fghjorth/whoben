@@ -6,8 +6,29 @@ setwd("~/GitHub/whoben") #set working directory here
 
 gd<-readRDS("whobenefits_data.rds")
 
+
 #####################################
-# REGS
+# DESCRIPTIVE STATISTICS
+#####################################
+
+# Table 3
+demtab<-data.frame(var=c("Age (mean)","Gender (pct. female)","Education (pct. some tertiary)"),sample=NA,pop=NA,pval=NA)
+demtab$var<-as.character(demtab$var)
+str(demtab)
+demtab$sample[1]<-mean(gd$age2013,na.rm=T)
+demtab$sample[2]<-100*prop.table(table(gd$female))[2]
+demtab$sample[3]<-100*prop.table(table(gd$edu>6))[2]
+#demtab$sample[4]<-prop.table(table(gd$income_own_m>8))[2]
+#avg age of all swedes is 41.2 - but we need avgs age of voting age pop, ie 18+. we don't have the exact number, but let's make the simplifying assumption that avg age among 0-17 is 9. then voting age pop age avg is:
+votingpopageavg<-(41.2*9645-1952*9)/(9645-1952)
+demtab$pop<-c(votingpopageavg,100*.500001,100*.253)
+demtab$pval<-as.numeric(c(t.test(gd$age2013,mu=demtab$pop[1])$p.value,t.test(gd$female==0,mu=demtab$pop[2])$p.value,t.test(gd$edu>6,mu=demtab$pop[3])$p.value))+.00001
+demtabsg<-stargazer(demtab[,1:3],summary=F,digits=1,digits.extra=2,covariate.labels=c("Variable","Sample","Population"),title="Sample demographics compared with Swedish voting-age population",label="demtab",font.size="footnotesize",align=T)
+writeLines(demtabsg,con="tables/demtab.txt")
+
+
+#####################################
+# REGRESSION MODELS
 #####################################
 
 # Main results: Table 4
@@ -119,36 +140,13 @@ writeLines(print(anovatabh3b),con="tables/whobenefits_anovatabh3b.txt")
 summary(m09kidssq<-lm(oppose~female+age2013+someuni+onlabmkt+prej+eid+stayhome+bulg01+nkids+I(nkids^2),data=gd))
 print(xtable(anova(m09,m09kidssq)))
 
-#Appendix figure 3
-require(effects)
-bulgeffs<-Effect("bulg01",m09,se=T,xlevels=2)$fit-Effect("bulg01",m09,se=T,xlevels=2)$fit[1]
-kideffs<-Effect("nkids",m09,se=T)$fit-Effect("nkids",m09,se=T)$fit[1]
 
-expcoefs<-data.frame(cond=c("Dutch","Bulgarian",1:5),
-                     condorder=c(1,2,1:5),
-                     est=c(bulgeffs,kideffs),
-                     se=c(Effect("bulg01",m09,se=T,xlevels=2)$se[1:2],Effect("nkids",m09,se=T)$se[1:5]),
-                     exp=c(rep("Nationality",2),rep("Number of children",5)))
-
-require(effects)
-prejfullfac<-rbind(as.data.frame(Effect(c("bulg01","nkidsfac"),mfullfac1,se=T,xlevels=list(bulg01=0:1,nkidsfac=1:5))),
-                   as.data.frame(Effect(c("bulg01","nkidsfac"),mfullfac2,se=T,xlevels=list(bulg01=0:1,nkidsfac=1:5))))
-prejfullfac$model<-c(rep("Children stay",10),rep("Not mentioned",10))
-prejfullfac$bulg01<-factor(prejfullfac$bulg01,labels=c("Dutch","Bulgarian"))
-
+#####################################
+# PLOTS
+#####################################
 require(ggplot2)
-ggplot(prejfullfac,aes(x=nkidsfac,y=fit,group=bulg01,color=bulg01)) +
-  geom_point(position=position_dodge(width=0.6)) +
-  geom_line(position=position_dodge(width=0.6)) +
-  geom_errorbar(aes(ymin=lower,ymax=upper),width=0,position=position_dodge(width=0.6)) +
-  facet_grid(.~model) +
-  theme_bw() +
-  xlab("Number of children") +
-  ylab("Expressed welfare chauvinism") +
-  theme(legend.title=element_blank()) +
-  scale_color_manual(values=c("#bbbbbb","#333333"))
 
-ggsave(file="figures/whobenefits_fullfac.pdf",width=8,height=4)
+# Code for preparing figures 2-4
 
 #predicted effects for interaction btw cues and prej
 prejintbulgeffs<-Effect(c("prej","bulg01"),m10,se=T,xlevels=list(prej=0:1,bulg01=0:1))$fit
@@ -183,15 +181,6 @@ eidintexpcoefs<-data.frame(cond=c("Dutch","Dutch","Bulgarian","Bulgarian",1,1,2,
                            se=c(Effect(c("eid","bulg01"),m10,se=T,xlevels=list(eid=0:1,bulg01=0:1))$se[1:4],Effect(c("eid","nkids"),m10,se=T,xlevels=list(eid=0:1))$se[1:10]),
                            exp=c(rep("Nationality",4),rep("Number of children",10)),
                            eid=rep(c("Minimum economic conservatism","Maximum economic conservatism"),7))
-
-
-
-
-
-#####################################
-# PLOTS
-#####################################
-require(ggplot2)
 
 t90<-1.65
 t95<-1.96
@@ -238,8 +227,7 @@ ggplot(eidintexpcoefs,aes(x=reorder(cond,condorder),y=est)) +
   theme_bw()
 ggsave(filename="figures/eidintexpplot.pdf",height=6,width=10)
 
-
-#write function for margins plot
+# Write function for margins plot
 margins.twoway<-function(model, xterm, zterm, zseq){
   coefs<-coef(model)
   cov<-vcov(model)
@@ -254,6 +242,22 @@ prejnkidsmargins<-margins.twoway(model=m10,xterm="nkids",zterm="prej",zseq=seq(f
 eidnkidsmargins<-margins.twoway(model=m11,xterm="nkids",zterm="eid",zseq=seq(from=0,to=1,by=.05))
 nkidsmargins<-rbind(prejnkidsmargins,eidnkidsmargins)
 nkidsmargins$zterm<-c(rep("Ethnic prejudice",nrow(prejnkidsmargins)),rep("Economic conservatism",nrow(eidnkidsmargins)))
+
+# Appendix figure 1
+ggplot(gd,aes(x=oppose,y=cutall)) +
+  geom_point(position=position_jitter(w=.07,h=.07),alpha=.2,size=2) +
+  geom_smooth(method="lm",color="black",alpha=.9) +
+  theme_bw() +
+  geom_abline(intercept=0, slope=1,linetype="dashed") +
+  xlab("Oppose cross-border welfare rights") +
+  ylab("Support cuts for all citizens") +
+  scale_x_continuous(breaks=c(0,.25,.5,.75,1),labels=c("0",".25",".5",".75","1")) +
+  scale_y_continuous(breaks=c(0,.25,.5,.75,1),labels=c("0",".25",".5",".75","1"))
+
+ggsave(file="figures/cutscatter.pdf",width=10,height=4)
+ggsave(file="figures/cutscatter.png",width=8,height=4)
+ggsave(file="figures/cutscatter_small.png",width=140,height=80,units="mm")
+
 
 # Appendix figure 2
 
@@ -270,92 +274,41 @@ ggplot(nkidsmargins,aes(x=z,y=dydx)) +
   theme_bw() 
 ggsave(filename="figures/nkidsmargins.pdf",width=7,height=4)
 
-#for the appendix: how strongly are eid and prej correlated?
-pdf(file="eidprejbivarplot.pdf")
-ggplot(gd,aes(x=eid,y=prej)) +
-  geom_point(position="jitter",alpha=.2) +
-  geom_smooth(method="loess",color="black",size=.7) +
+#Appendix figure 3
+
+require(effects)
+bulgeffs<-Effect("bulg01",m09,se=T,xlevels=2)$fit-Effect("bulg01",m09,se=T,xlevels=2)$fit[1]
+kideffs<-Effect("nkids",m09,se=T)$fit-Effect("nkids",m09,se=T)$fit[1]
+
+expcoefs<-data.frame(cond=c("Dutch","Bulgarian",1:5),
+                     condorder=c(1,2,1:5),
+                     est=c(bulgeffs,kideffs),
+                     se=c(Effect("bulg01",m09,se=T,xlevels=2)$se[1:2],Effect("nkids",m09,se=T)$se[1:5]),
+                     exp=c(rep("Nationality",2),rep("Number of children",5)))
+
+require(effects)
+prejfullfac<-rbind(as.data.frame(Effect(c("bulg01","nkidsfac"),mfullfac1,se=T,xlevels=list(bulg01=0:1,nkidsfac=1:5))),
+                   as.data.frame(Effect(c("bulg01","nkidsfac"),mfullfac2,se=T,xlevels=list(bulg01=0:1,nkidsfac=1:5))))
+prejfullfac$model<-c(rep("Children stay",10),rep("Not mentioned",10))
+prejfullfac$bulg01<-factor(prejfullfac$bulg01,labels=c("Dutch","Bulgarian"))
+
+require(ggplot2)
+ggplot(prejfullfac,aes(x=nkidsfac,y=fit,group=bulg01,color=bulg01)) +
+  geom_point(position=position_dodge(width=0.6)) +
+  geom_line(position=position_dodge(width=0.6)) +
+  geom_errorbar(aes(ymin=lower,ymax=upper),width=0,position=position_dodge(width=0.6)) +
+  facet_grid(.~model) +
   theme_bw() +
-  xlab("Economic conservatism") +
-  ylab("Ethnic prejudice")
-dev.off()
-cor.test(gd$eid,gd$prej)
+  xlab("Number of children") +
+  ylab("Expressed welfare chauvinism") +
+  theme(legend.title=element_blank()) +
+  scale_color_manual(values=c("#bbbbbb","#333333"))
 
-#check: does opposition to CBWR predict support for cutting benefits for everyone?
-ggplot(gd,aes(x=oppose,y=cutall)) +
-  geom_point(position=position_jitter(w=.07,h=.07),alpha=.2,size=2) +
-  geom_smooth(method="lm",color="black",alpha=.9) +
-  theme_bw() +
-  geom_abline(intercept=0, slope=1,linetype="dashed") +
-  xlab("Oppose cross-border welfare rights") +
-  ylab("Support cuts for all citizens") +
-  scale_x_continuous(breaks=c(0,.25,.5,.75,1),labels=c("0",".25",".5",".75","1")) +
-  scale_y_continuous(breaks=c(0,.25,.5,.75,1),labels=c("0",".25",".5",".75","1"))
+ggsave(file="figures/whobenefits_fullfac.pdf",width=8,height=4)
 
-ggsave(file="figures/cutscatter.pdf",width=10,height=4)
-ggsave(file="figures/cutscatter.png",width=8,height=4)
-ggsave(file="figures/cutscatter_small.png",width=140,height=80,units="mm")
-
-#check: cultural distance from Sweden vs. purchasing power
-#distance and ppp
-hofp<-merge(read.csv("eurostatppp.csv",sep=";",dec=","),
-            read.csv("hofstede.csv",sep=";"),
-            by="ctry")
-
-table(hofp$ctry)
-
-#only EU28 countries
-eu28<-c("Austria","Belgium","Bulgaria","Croatia","Cyprus","Czech Republic","Denmark","Estonia","Finland","France","Germany","Greece","Hungary","Ireland","Italy","Latvia","Lithuania","Luxembourg","Malta","Netherlands","Poland","Portugal","Romania","Slovakia","Slovenia","Spain","Sweden","United Kingdom")
-
-hofp$relpricelevel<-hofp$pricelevel/hofp$pricelevel[hofp$ctry=="Sweden"]
-
-ggplot(subset(hofp, ctry %in% eu28),aes(x=swemse/6,y=100*relpricelevel)) +
-  geom_text(aes(label=ctry),size=4) +
-  geom_smooth(method="lm",alpha=.5,color="black") +
-  theme_bw() +
-  xlab("Cultural distance to Sweden (Hofstede MSE)") +
-  ylab("Purchasing power relative to Sweden (indexed)")
-
-mean(hofp$pricelevel)
-
-ggsave(file="EUP Resubmission/hofp.png",width=8,height=4)
-ggsave(file="EUP Resubmission/hofp_small.png",width=140,height=80,units="mm")
-
-cor.test(subset(hofp, ctry %in% eu28)$swemse,subset(hofp, ctry %in% eu28)$pricelevel)
-
-
-cor.test(gd$oppose,gd$cutall)
-
-prop.table(table(gd$cutall))*100
-sum(prop.table(table(gd$cutall))[4:5])*100
-sum(prop.table(table(gd$oppose))[4:5])*100
-
-prop.table(table(gd$cutall<.5 & gd$oppose>.5))
-
-
-#demographics table
-demtab<-data.frame(var=c("Age (mean)","Gender (pct. female)","Education (pct. some tertiary)"),sample=NA,pop=NA,pval=NA)
-demtab$var<-as.character(demtab$var)
-str(demtab)
-demtab$sample[1]<-mean(gd$age2013,na.rm=T)
-demtab$sample[2]<-100*prop.table(table(gd$female))[2]
-demtab$sample[3]<-100*prop.table(table(gd$edu>6))[2]
-#demtab$sample[4]<-prop.table(table(gd$income_own_m>8))[2]
-#avg age of all swedes is 41.2 - but we need avgs age of voting age pop, ie 18+. we don't have the exact number, but let's make the simplifying assumption that avg age among 0-17 is 9. then voting age pop age avg is:
-votingpopageavg<-(41.2*9645-1952*9)/(9645-1952)
-demtab$pop<-c(votingpopageavg,100*.500001,100*.253)
-demtab$pval<-as.numeric(c(t.test(gd$age2013,mu=demtab$pop[1])$p.value,t.test(gd$female==0,mu=demtab$pop[2])$p.value,t.test(gd$edu>6,mu=demtab$pop[3])$p.value))+.00001
-demtabsg<-stargazer(demtab[,1:3],summary=F,digits=1,digits.extra=2,covariate.labels=c("Variable","Sample","Population"),title="Sample demographics compared with Swedish voting-age population",label="demtab",font.size="footnotesize",align=T)
-writeLines(demtabsg,con="demtab.txt")
-
-
-### ESS
-
-#get dotplot of cultural support for immigration
+### ESS PLOT
 require(foreign)
-#ess6<-read.dta(file="/Users/frederikhjorth/Data/ESS/ESS6e02.dta") #mac
-ess6<-read.dta(file="Z:/Data/ESS6/ESS6e02.dta") #pc
-# due to file size, the ESS6 is not included in the replication materials, but can be obtained at http://www.europeansocialsurvey.org/data/download.html?r=6
+ess6<-read.dta(file="ESS6e02.dta") # due to file size, the ESS6 is not included in the replication materials, but can be obtained at http://www.europeansocialsurvey.org/data/download.html?r=6
 
 ess6$cultenrich<-ifelse(as.numeric(ess6$imueclt)<12,(as.numeric(ess6$imueclt)-1)/10,NA)
 ess6$goodecon<-ifelse(as.numeric(ess6$imbgeco)<12,(as.numeric(ess6$imbgeco)-1)/10,NA)
@@ -372,7 +325,6 @@ immsumb<-ess6 %.%
   group_by(cntry) %.%
   summarise(avg=mean(betplace,na.rm=T),se=sd(betplace,na.rm=T)/sqrt(length(betplace)),var="betplace")
 
-
 rm(ess6)
 
 immsum<-as.data.frame(rbind(immsumc,immsumg,immsumb))
@@ -385,11 +337,7 @@ immsum$cntry<-reorder(immsum$cntry,immsum$avg)
 immsum$var<-factor(immsum$var,labels=c("Makes country better place","Enriches culture","Good for economy"))
 factor(immsum$var)
 
-#setwd("~/Google Drive/InProgress/Gothenburg") #mac
-setwd("C:/Users/fh/Google Drev/InProgress/Gothenburg") #pc
-
 require(ggplot2)
-pdf(file="essplot.pdf",height=4,width=9)
 ggplot(subset(immsum,!(cntry %in% c("AL","IL","NO","RU","XK","UA","CH","IS"))),aes(x=avg,y=cntry,colour=factor(cntry=="SE"))) +
   geom_point() +
   geom_errorbarh(aes(xmin=lwr95,xmax=upr95),size=.5,width=.01,height=0) +
@@ -402,4 +350,5 @@ ggplot(subset(immsum,!(cntry %in% c("AL","IL","NO","RU","XK","UA","CH","IS"))),a
   scale_colour_manual(values=c("gray","black")) +
   ylab("") +
   theme(axis.text.y = element_text(colour="black"))
-dev.off()
+
+ggsave("figures/essplot.pdf",height=4,width=9)
