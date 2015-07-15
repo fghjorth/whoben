@@ -12,4 +12,4 @@ Contents:
 1. `tables` - folder that holds tables (TeX formatted, in .txt format)
 1. `figures` - folder that holds figures (in .pdf format)
 
-Note that figure 1 in the paper uses data from the European Social Survey round 6. Due to its file size, the ESS data file `ESS6e02` is not included here. However, it can be downloaded from <http://www.europeansocialsurvey.org/data/download.html?r=6>.
+Note that figure 1 in the paper uses data from the European Social Survey round 6. Due to its file size, the ESS data file `ESS6e02.dta` (in STATA format) is not included here. However, it can be downloaded from <http://www.europeansocialsurvey.org/data/download.html?r=6>.
