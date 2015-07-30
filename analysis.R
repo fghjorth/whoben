@@ -107,22 +107,6 @@ regtabfullfac<-stargazer(mfullfac1,mfullfac2,style="apsr",title="Models of welfa
 
 writeLines(regtabfullfac,con="tables/whobenefits_regtabfullfac.txt") 
 
-summary(mfullfac3<-lm(oppose~female+age2013+someuni+onlabmkt+prej+eid+bulg01*nkids+stayhome,data=gd))
-summary(mfullfac4<-lm(oppose~female+age2013+someuni+onlabmkt+prej+eid+bulg01*stayhome+nkids,data=gd))
-summary(mfullfac5<-lm(oppose~female+age2013+someuni+onlabmkt+prej+eid+stayhome*nkids+bulg01,data=gd))
-
-regtabfullfaclin<-stargazer(mfullfac3,mfullfac4,mfullfac5,style="apsr",title="Models of welfare chauvinism, full factorial models",
-                            intercept.bottom=F,digits=3,dep.var.labels="Opposed to cross-border welfare rights",
-                            dep.var.labels.include=T,font.size="footnotesize",label="regtabfullfac",column.sep.width="5pt",
-                            omit.stat=c("f","ser"),star.cutoffs=c(.05,.01,.001),align=T,
-                            column.labels=c("Children stay","Not mentioned","b"),order=c(1:8,10,12,9,11,13),
-                            covariate.labels=c("Intercept","Gender (f)","Age","Education (some uni.)","Employed",
-                                               "Ethnic prejudice (EP)","Economic conservatism (EC)","Nationality: Bulgarian",
-                                               "No. of children (NC)","Children stay home (SH)","SH$\\times$NC",
-                                               "SH$\\times$Bulgarian","NC$\\times$Bulgarian"))
-
-writeLines(regtabfullfaclin,con="tables/whobenefits_regtabfullfaclin.txt")
-
 #Appendix tables 6-9: Full factorial anovas
 summary(fullfacanova<-aov(oppose~female+age2013+someuni+onlabmkt+prej+eid+bulg01*nkids*stayhome,data=gd))
 summary(fullfacanova2<-aov(oppose~female+age2013+someuni+onlabmkt+prej+eid+bulg01*factor(nkids)*stayhome,data=gd))
