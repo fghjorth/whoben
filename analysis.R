@@ -1,6 +1,18 @@
 setwd("~/GitHub/whoben") #set working directory here
 
 #####################################
+# LOAD PACKAGES
+#####################################
+
+require(stargazer)
+require(xtable)
+require(ggplot2)
+require(effects)
+require(foreign)
+require(dplyr)
+
+
+#####################################
 # READ IN SAVED DATA
 #####################################
 
@@ -37,7 +49,6 @@ summary(m09<-lm(oppose~female+age2013+someuni+onlabmkt+prej+eid+stayhome+bulg01+
 summary(m10<-lm(oppose~female+age2013+someuni+onlabmkt+eid+stayhome+prej*bulg01+prej*nkids,data=gd))
 summary(m11<-lm(oppose~female+age2013+someuni+onlabmkt+prej+stayhome+eid*bulg01+eid*nkids,data=gd))
 
-require(stargazer)
 regtab1<-stargazer(m07,m09,m10,m11,style="apsr",title="Models of welfare chauvinism",intercept.bottom=F,digits=3,dep.var.labels="Opposed to cross-border welfare rights",dep.var.labels.include=T,font.size="footnotesize",label="regtab1",column.sep.width="5pt",covariate.labels=c("Intercept","Gender (f)","Age","Education (some uni.)","Employed","Ethnic prejudice (EP)","Economic conservatism (EC)","Children stay","Nationality: Bulgarian","No. of children (NC)","EP$\\times$Nationality: Bulgarian","EP$\\times$NC","EC$\\times$Nationality: Bulgarian","EC$\\times$NC"),omit.stat=c("f","ser"),star.cutoffs=c(.05,.01,.001),align=T)
 writeLines(regtab1,con="tables/whobenefits_regtab1.txt")     
 
@@ -119,7 +130,6 @@ summary(fullfacanova2<-aov(oppose~female+age2013+someuni+onlabmkt+prej+eid+bulg0
 summary(fullfacanovah3a<-aov(oppose~female+age2013+someuni+onlabmkt+prej*factor(nkids)+prej*bulg01+eid+bulg01*factor(nkids)*stayhome,data=gd))
 summary(fullfacanovah3b<-aov(oppose~female+age2013+someuni+onlabmkt+prej+eid*factor(nkids)+eid*bulg01+bulg01*factor(nkids)*stayhome,data=gd))
 
-require(xtable)
 anovatab<-xtable(fullfacanova,caption="Full factorial ANOVA on all experimental conditions with covariates (number of children as interval scale)",label="fullfac")
 rownames(anovatab)<-c("Gender (f)","Age","Education (some uni.)","Employed","Ethnic prejudice (EP)","Economic conservatism (EC)","Bulgarian","No. of children (NC)","Children stay (CS)","Bulgarian*NC","Bulgarian * CS","NC * Children stay","Bulgarian * NC * SC","Residuals")
 writeLines(print(anovatab),con="tables/whobenefits_anovatab.txt")
@@ -144,7 +154,6 @@ print(xtable(anova(m09,m09kidssq)))
 #####################################
 # PLOTS
 #####################################
-require(ggplot2)
 
 # Code for preparing figures 2-4
 
@@ -276,7 +285,6 @@ ggsave(filename="figures/nkidsmargins.pdf",width=7,height=4)
 
 #Appendix figure 3
 
-require(effects)
 bulgeffs<-Effect("bulg01",m09,se=T,xlevels=2)$fit-Effect("bulg01",m09,se=T,xlevels=2)$fit[1]
 kideffs<-Effect("nkids",m09,se=T)$fit-Effect("nkids",m09,se=T)$fit[1]
 
@@ -286,13 +294,11 @@ expcoefs<-data.frame(cond=c("Dutch","Bulgarian",1:5),
                      se=c(Effect("bulg01",m09,se=T,xlevels=2)$se[1:2],Effect("nkids",m09,se=T)$se[1:5]),
                      exp=c(rep("Nationality",2),rep("Number of children",5)))
 
-require(effects)
 prejfullfac<-rbind(as.data.frame(Effect(c("bulg01","nkidsfac"),mfullfac1,se=T,xlevels=list(bulg01=0:1,nkidsfac=1:5))),
                    as.data.frame(Effect(c("bulg01","nkidsfac"),mfullfac2,se=T,xlevels=list(bulg01=0:1,nkidsfac=1:5))))
 prejfullfac$model<-c(rep("Children stay",10),rep("Not mentioned",10))
 prejfullfac$bulg01<-factor(prejfullfac$bulg01,labels=c("Dutch","Bulgarian"))
 
-require(ggplot2)
 ggplot(prejfullfac,aes(x=nkidsfac,y=fit,group=bulg01,color=bulg01)) +
   geom_point(position=position_dodge(width=0.6)) +
   geom_line(position=position_dodge(width=0.6)) +
@@ -307,14 +313,13 @@ ggplot(prejfullfac,aes(x=nkidsfac,y=fit,group=bulg01,color=bulg01)) +
 ggsave(file="figures/whobenefits_fullfac.pdf",width=8,height=4)
 
 ### ESS PLOT
-require(foreign)
 ess6<-read.dta(file="ESS6e02.dta") # due to file size, the ESS6 is not included in the replication materials, but can be obtained at http://www.europeansocialsurvey.org/data/download.html?r=6
 
 ess6$cultenrich<-ifelse(as.numeric(ess6$imueclt)<12,(as.numeric(ess6$imueclt)-1)/10,NA)
 ess6$goodecon<-ifelse(as.numeric(ess6$imbgeco)<12,(as.numeric(ess6$imbgeco)-1)/10,NA)
 ess6$betplace<-ifelse(as.numeric(ess6$imwbcnt)<12,(as.numeric(ess6$imwbcnt)-1)/10,NA)
 
-require(dplyr)
+
 immsumc<-ess6 %.%
   group_by(cntry) %.%
   summarise(avg=mean(cultenrich,na.rm=T),se=sd(cultenrich,na.rm=T)/sqrt(length(cultenrich)),var="cultenrich")
@@ -337,7 +342,6 @@ immsum$cntry<-reorder(immsum$cntry,immsum$avg)
 immsum$var<-factor(immsum$var,labels=c("Makes country better place","Enriches culture","Good for economy"))
 factor(immsum$var)
 
-require(ggplot2)
 ggplot(subset(immsum,!(cntry %in% c("AL","IL","NO","RU","XK","UA","CH","IS"))),aes(x=avg,y=cntry,colour=factor(cntry=="SE"))) +
   geom_point() +
   geom_errorbarh(aes(xmin=lwr95,xmax=upr95),size=.5,width=.01,height=0) +
