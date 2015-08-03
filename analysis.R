@@ -22,7 +22,7 @@ gd<-readRDS("whobenefits_data.rds")
 # DESCRIPTIVE STATISTICS
 #####################################
 
-# Table 3
+# Table of descriptive statistics (not in paper)
 demtab<-data.frame(var=c("Age (mean)","Gender (pct. female)","Education (pct. some tertiary)"),sample=NA,pop=NA,pval=NA)
 demtab$var<-as.character(demtab$var)
 str(demtab)
@@ -42,16 +42,16 @@ writeLines(demtabsg,con="tables/demtab.txt")
 # REGRESSION MODELS
 #####################################
 
-# Main results: Table 4
+# Main results: Table 2
 summary(m07<-lm(oppose~female+age2013+someuni+onlabmkt+prej+eid,data=gd))
 summary(m09<-lm(oppose~female+age2013+someuni+onlabmkt+prej+eid+stayhome+bulg01+nkids,data=gd))
 summary(m10<-lm(oppose~female+age2013+someuni+onlabmkt+eid+stayhome+prej*bulg01+prej*nkids,data=gd))
 summary(m11<-lm(oppose~female+age2013+someuni+onlabmkt+prej+stayhome+eid*bulg01+eid*nkids,data=gd))
 
-regtab1<-stargazer(m07,m09,m10,m11,style="apsr",title="Models of welfare chauvinism",intercept.bottom=F,digits=3,dep.var.labels="Opposed to cross-border welfare rights",dep.var.labels.include=T,font.size="footnotesize",label="regtab1",column.sep.width="5pt",covariate.labels=c("Intercept","Gender (f)","Age","Education (some uni.)","Employed","Ethnic prejudice (EP)","Economic conservatism (EC)","Children stay","Nationality: Bulgarian","No. of children (NC)","EP$\\times$Nationality: Bulgarian","EP$\\times$NC","EC$\\times$Nationality: Bulgarian","EC$\\times$NC"),omit.stat=c("f","ser"),star.cutoffs=c(.05,.01,.001),align=T)
+regtab1<-stargazer(m07,m09,m10,m11,style="apsr",title="Models of welfare chauvinism",intercept.bottom=F,digits=2,dep.var.labels="Opposed to cross-border welfare rights",dep.var.labels.include=T,font.size="footnotesize",label="regtab1",column.sep.width="5pt",covariate.labels=c("Intercept","Gender (f)","Age","Education (some uni.)","Employed","Ethnic prejudice (EP)","Economic conservatism (EC)","Children stay","Nationality: Bulgarian","No. of children (NC)","EP$\\times$Nationality: Bulgarian","EP$\\times$NC","EC$\\times$Nationality: Bulgarian","EC$\\times$NC"),omit.stat=c("f","ser"),star.cutoffs=c(.05,.01,.001),align=T,digit.separate=0)
 writeLines(regtab1,con="tables/whobenefits_regtab1.txt")     
 
-#Appendix table 1: Tests for sequence effect
+#Appendix table A1: Tests for sequence effect
 summary(mseqeff1<-lm(oppose~female+age2013+someuni+onlabmkt+prej+eid+prej.bef01+stayhome+bulg01+nkids,data=gd))
 summary(mseqeff2<-lm(oppose~female+age2013+someuni+onlabmkt+prej+eid+prej.bef01+stayhome+bulg01+nkids+prej.bef01:stayhome,data=gd))
 summary(mseqeff3<-lm(oppose~female+age2013+someuni+onlabmkt+prej+eid+prej.bef01+stayhome+bulg01+nkids+prej.bef01:bulg01,data=gd))
@@ -60,9 +60,9 @@ summary(mseqeff4<-lm(oppose~female+age2013+someuni+onlabmkt+prej+eid+prej.bef01+
 summary(mseqeff5<-lm(oppose~female+age2013+someuni+onlabmkt+prej+eid+prej.bef01+stayhome+bulg01+nkids+prej.bef01:prej,data=gd))
 
 regtabseqeff<-stargazer(mseqeff1,mseqeff5,mseqeff2,mseqeff3,mseqeff4,style="apsr",title="Tests of sequence effects",
-                        intercept.bottom=F,digits=3,dep.var.labels="Opposed to cross-border welfare rights",
+                        intercept.bottom=F,digits=2,dep.var.labels="Opposed to cross-border welfare rights",
                         dep.var.labels.include=T,font.size="footnotesize",label="regtabseqeff",column.sep.width="1pt",
-                        omit.stat=c("f","ser"),star.cutoffs=c(.05,.01,.001),align=T,
+                        omit.stat=c("f","ser"),star.cutoffs=c(.05,.01,.001),align=T,digit.separate=0,
                         covariate.labels=c("Intercept","Gender (f)","Age","Education (some uni.)","Employed",
                                            "Ethnic prejudice (EP)","Economic conservatism (EC)","EP scale before probe (Before)",
                                            "Children stay home (SH)","Nationality: Bulgarian","No. of children (NC)",
@@ -71,33 +71,33 @@ regtabseqeff<-stargazer(mseqeff1,mseqeff5,mseqeff2,mseqeff3,mseqeff4,style="apsr
 writeLines(regtabseqeff,con="tables/whobenefits_regtabseqeff.txt")
 
 
-#Appendix table 3: Logits
+#Appendix table A3: Logits
 summary(m07.logit<-glm(oppose01~female+age2013+someuni+onlabmkt+prej+eid,data=gd,family=binomial()))
 summary(m09.logit<-glm(oppose01~female+age2013+someuni+onlabmkt+prej+eid+stayhome+bulg01+nkids,data=gd,family=binomial()))
 summary(m10.logit<-glm(oppose01~female+age2013+someuni+onlabmkt+eid+stayhome+prej*bulg01+prej*nkids,data=gd,family=binomial()))
 summary(m11.logit<-glm(oppose01~female+age2013+someuni+onlabmkt+prej+stayhome+eid*bulg01+eid*nkids,data=gd,family=binomial()))
 
-regtablogits<-stargazer(m07.logit,m09.logit,m10.logit,m11.logit,style="apsr",title="Models of welfare chauvinism, logistic regressions",intercept.bottom=F,digits=3,dep.var.labels="Opposed to cross-border welfare rights",dep.var.labels.include=T,font.size="footnotesize",label="regtablogits",column.sep.width="5pt",covariate.labels=c("Intercept","Gender (f)","Age","Education (some uni.)","Employed","Ethnic prejudice (EP)","Economic conservatism (EC)","Children stay","Nationality: Bulgarian","No. of children (NC)","EP$\\times$Nationality: Bulgarian","EP$\\times$NC","EC$\\times$Bulgarian","EC$\\times$NC"),omit.stat=c("f","ser"),star.cutoffs=c(.05,.01,.001),align=T)
+regtablogits<-stargazer(m07.logit,m09.logit,m10.logit,m11.logit,style="apsr",title="Models of welfare chauvinism, logistic regressions",intercept.bottom=F,digits=2,dep.var.labels="Opposed to cross-border welfare rights",dep.var.labels.include=T,font.size="footnotesize",label="regtablogits",column.sep.width="5pt",covariate.labels=c("Intercept","Gender (f)","Age","Education (some uni.)","Employed","Ethnic prejudice (EP)","Economic conservatism (EC)","Children stay","Nationality: Bulgarian","No. of children (NC)","EP$\\times$Nationality: Bulgarian","EP$\\times$NC","EC$\\times$Bulgarian","EC$\\times$NC"),omit.stat=c("f","ser"),star.cutoffs=c(.05,.01,.001),align=T,digit.separate=0)
 writeLines(regtablogits,con="tables/whobenefits_regtablogits.txt") 
 
-#Appendix table 4: Reduced measure of ethnic prejudice
+#Appendix table A4: Reduced measure of ethnic prejudice
 summary(m07.prejred<-lm(oppose~female+age2013+someuni+onlabmkt+prejred+eid,data=gd))
 summary(m09.prejred<-lm(oppose~female+age2013+someuni+onlabmkt+prejred+eid+stayhome+bulg01+nkids,data=gd))
 summary(m10.prejred<-lm(oppose~female+age2013+someuni+onlabmkt+eid+stayhome+prejred*bulg01+prejred*nkids,data=gd))
 summary(m11.prejred<-lm(oppose~female+age2013+someuni+onlabmkt+prejred+stayhome+eid*bulg01+eid*nkids,data=gd))
 
-regtabprejred<-stargazer(m07.prejred,m09.prejred,m10.prejred,m11.prejred,style="apsr",title="Models of welfare chauvinism, reduced measure of ethnic prejudice",intercept.bottom=F,digits=3,dep.var.labels="Opposed to cross-border welfare rights",dep.var.labels.include=T,font.size="footnotesize",label="regtabprejred",column.sep.width="5pt",covariate.labels=c("Intercept","Gender (f)","Age","Education (some uni.)","Employed","Ethnic prejudice (EP)","Economic conservatism (EC)","Children stay","Nationality: Bulgarian","No. of children (NC)","EP$\\times$Bulgarian","EP$\\times$NC","EC$\\times$Bulgarian","EC$\\times$NC"),omit.stat=c("f","ser"),star.cutoffs=c(.05,.01,.001),align=T)
+regtabprejred<-stargazer(m07.prejred,m09.prejred,m10.prejred,m11.prejred,style="apsr",title="Models of welfare chauvinism, reduced measure of ethnic prejudice",intercept.bottom=F,digits=2,dep.var.labels="Opposed to cross-border welfare rights",dep.var.labels.include=T,font.size="footnotesize",label="regtabprejred",column.sep.width="5pt",covariate.labels=c("Intercept","Gender (f)","Age","Education (some uni.)","Employed","Ethnic prejudice (EP)","Economic conservatism (EC)","Children stay","Nationality: Bulgarian","No. of children (NC)","EP$\\times$Bulgarian","EP$\\times$NC","EC$\\times$Bulgarian","EC$\\times$NC"),omit.stat=c("f","ser"),star.cutoffs=c(.05,.01,.001),align=T,digit.separate=0)
 writeLines(regtabprejred,con="tables/whobenefits_regtabprejred.txt") 
 
-#Appendix table 5: full factorial models
+#Appendix table A5: full factorial models
 gd$nkidsfac<-factor(gd$nkids)
 summary(mfullfac1<-lm(oppose~female+age2013+someuni+onlabmkt+prej+eid+bulg01*nkidsfac,data=subset(gd,stayhome==1)))
 summary(mfullfac2<-lm(oppose~female+age2013+someuni+onlabmkt+prej+eid+bulg01*nkidsfac,data=subset(gd,stayhome==0)))
 
 regtabfullfac<-stargazer(mfullfac1,mfullfac2,style="apsr",title="Models of welfare chauvinism, full factorial models",
-                         intercept.bottom=F,digits=3,dep.var.labels="Opposed to cross-border welfare rights",
+                         intercept.bottom=F,digits=2,dep.var.labels="Opposed to cross-border welfare rights",
                          dep.var.labels.include=T,font.size="footnotesize",label="regtabfullfac",column.sep.width="5pt",
-                         omit.stat=c("f","ser"),star.cutoffs=c(.05,.01,.001),align=T,
+                         omit.stat=c("f","ser"),star.cutoffs=c(.05,.01,.001),align=T,digit.separate=0,
                          column.labels=c("Children stay","Not mentioned","b"),
                          covariate.labels=c("Intercept","Gender (f)","Age","Education (some uni.)","Employed",
                                             "Ethnic prejudice (EP)","Economic conservatism (EC)","Nationality: Bulgarian",
@@ -106,7 +106,7 @@ regtabfullfac<-stargazer(mfullfac1,mfullfac2,style="apsr",title="Models of welfa
 
 writeLines(regtabfullfac,con="tables/whobenefits_regtabfullfac.txt") 
 
-#Appendix tables 6-9: Full factorial anovas
+#Appendix tables A6-A9: Full factorial anovas
 summary(fullfacanova<-aov(oppose~female+age2013+someuni+onlabmkt+prej+eid+bulg01*nkids*stayhome,data=gd))
 summary(fullfacanova2<-aov(oppose~female+age2013+someuni+onlabmkt+prej+eid+bulg01*factor(nkids)*stayhome,data=gd))
 
@@ -233,9 +233,9 @@ margins.twoway<-function(model, xterm, zterm, zseq){
 prejnkidsmargins<-margins.twoway(model=m10,xterm="nkids",zterm="prej",zseq=seq(from=0,to=1,by=.05))
 eidnkidsmargins<-margins.twoway(model=m11,xterm="nkids",zterm="eid",zseq=seq(from=0,to=1,by=.05))
 nkidsmargins<-rbind(prejnkidsmargins,eidnkidsmargins)
-nkidsmargins$zterm<-c(rep("Ethnic prejudice",nrow(prejnkidsmargins)),rep("Economic conservatism",nrow(eidnkidsmargins)))
+nkidsmargins$zterm<-c(rep("b) Ethnic prejudice",nrow(prejnkidsmargins)),rep("a) Economic conservatism",nrow(eidnkidsmargins)))
 
-# Appendix figure 1
+# Appendix figure A1
 ggplot(gd,aes(x=oppose,y=cutall)) +
   geom_point(position=position_jitter(w=.07,h=.07),alpha=.2,size=2) +
   geom_smooth(method="lm",color="black",alpha=.9) +
@@ -251,7 +251,7 @@ ggsave(file="figures/cutscatter.png",width=8,height=4)
 ggsave(file="figures/cutscatter_small.png",width=140,height=80,units="mm")
 
 
-# Appendix figure 2
+# Appendix figure A2
 
 ggplot(nkidsmargins,aes(x=z,y=dydx)) +
   geom_hline(yintercept=0,linetype=2,color="dark gray") +
@@ -266,7 +266,7 @@ ggplot(nkidsmargins,aes(x=z,y=dydx)) +
   theme_bw() 
 ggsave(filename="figures/nkidsmargins.pdf",width=7,height=4)
 
-#Appendix figure 3
+#Appendix figure A3
 
 bulgeffs<-Effect("bulg01",m09,se=T,xlevels=2)$fit-Effect("bulg01",m09,se=T,xlevels=2)$fit[1]
 kideffs<-Effect("nkids",m09,se=T)$fit-Effect("nkids",m09,se=T)$fit[1]
@@ -279,7 +279,7 @@ expcoefs<-data.frame(cond=c("Dutch","Bulgarian",1:5),
 
 prejfullfac<-rbind(as.data.frame(Effect(c("bulg01","nkidsfac"),mfullfac1,se=T,xlevels=list(bulg01=0:1,nkidsfac=1:5))),
                    as.data.frame(Effect(c("bulg01","nkidsfac"),mfullfac2,se=T,xlevels=list(bulg01=0:1,nkidsfac=1:5))))
-prejfullfac$model<-c(rep("Children stay",10),rep("Not mentioned",10))
+prejfullfac$model<-c(rep("a) Children stay",10),rep("b) Not mentioned",10))
 prejfullfac$bulg01<-factor(prejfullfac$bulg01,labels=c("Dutch","Bulgarian"))
 
 ggplot(prejfullfac,aes(x=nkidsfac,y=fit,group=bulg01,color=bulg01)) +
@@ -290,7 +290,7 @@ ggplot(prejfullfac,aes(x=nkidsfac,y=fit,group=bulg01,color=bulg01)) +
   theme_bw() +
   xlab("Number of children") +
   ylab("Expressed welfare chauvinism") +
-  theme(legend.title=element_blank()) +
+  theme(legend.title=element_blank(),legend.key=element_blank()) +
   scale_color_manual(values=c("#bbbbbb","#333333"))
 
 ggsave(file="figures/whobenefits_fullfac.pdf",width=8,height=4)
