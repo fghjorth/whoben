@@ -18,7 +18,6 @@ require(dplyr)
 
 gd<-readRDS("whobenefits_data.rds")
 
-
 #####################################
 # DESCRIPTIVE STATISTICS
 #####################################

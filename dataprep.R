@@ -1,10 +1,19 @@
 setwd("~/GitHub/whoben") #set working directory here
 
 #####################################
+# LOAD PACKAGES
+#####################################
+
+require(effects)
+require(foreign)
+require(dplyr)
+require(psy)
+require(psych)
+
+#####################################
 # READ IN DATA
 #####################################
 
-require(foreign)
 #read in data
 gd<-read.spss("prel_s2_hjorth_20140505.sav",use.value.labels=F,to.data.frame=T)
 gdlabs<-read.spss("prel_s2_hjorth_20140505.sav",use.value.labels=T,to.data.frame=T)
@@ -50,7 +59,6 @@ gd$stayhome<-(as.numeric(gd$s2gr3)-1)
 #prejudice
 table(gdlabs$prejudice2)
 table(as.numeric(gd$prejudice2))
-require(psy)
 
 gd$prej<-((as.numeric(gd$prejudice1)+as.numeric(gd$prejudice2)-as.numeric(gd$prejudice3)-as.numeric(gd$prejudice4)-as.numeric(gd$prejudice5)-as.numeric(gd$prejudice6))-6)*(-1/24)
 prejalpha<-cronbach(data.frame(cbind(as.numeric(gd$prejudice1),as.numeric(gd$prejudice2),-as.numeric(gd$prejudice3),-as.numeric(gd$prejudice4),-as.numeric(gd$prejudice5),-as.numeric(gd$prejudice6))))$alpha
@@ -66,7 +74,7 @@ gd$eid2<-ifelse(as.numeric(gd$s2_q34_1)<6,(as.numeric(gd$s2_q34_1)-5)/-4)
 gd$eid3<-ifelse(as.numeric(gd$s2_q34_4)<6,(as.numeric(gd$s2_q34_4)-1)/4)
 gd$eid4<-ifelse(as.numeric(gd$s2_q34_5)<6,(as.numeric(gd$s2_q34_5)-5)/-4)
 gd$eid5<-ifelse(as.numeric(gd$s2_q32_5)<6,(as.numeric(gd$s2_q32_5)-1)/4)
-require(psych)
+
 eidalpha<-alpha(data.frame(a=gd$eid1,b=gd$eid2,c=gd$eid3,d=gd$eid4,e=gd$eid5))$total$std.alpha #this gives a nice alpha
 gd$eid<-(gd$eid1+gd$eid2+gd$eid3+gd$eid4+gd$eid5)/5
 hist(gd$eid)
